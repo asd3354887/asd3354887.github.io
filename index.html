@@ -6,6 +6,7 @@
 const SITES = [
   {name: '理財規劃人員', path: 'fp-quiz', key: 'fpquiz_v1'},
   {name: '銀行內控（一般）', path: 'bank-ic-quiz', key: 'bankic_v1'},
+  {name: '金融市場常識與職業道德', path: 'market-quiz', key: 'marketquiz_v1', sub: []},
 ];
 const SUB = [['note.html', '📖 筆記'], ['answers.html', '✅ 解析'], ['numbers.html', '🔢 數字'], ['predict.html', '🎯 預測']];
 function prog(key) {
@@ -19,5 +20,5 @@ function prog(key) {
 }
 document.getElementById('list').innerHTML = SITES.map(x => `<div class=card><h3>${x.name}</h3><div class=mut>${prog(x.key)}</div>
   <a class=b href="/${x.path}/">📝 題庫練習／模擬考</a>
-  <div class=sub>${SUB.map(([f, n]) => `<a href="/${x.path}/${f}">${n}</a>`).join('')}</div></div>`).join('');
+  <div class=sub>${(x.sub || SUB).map(([f, n]) => `<a href="/${x.path}/${f}">${n}</a>`).join('')}</div></div>`).join('');
 </script>
