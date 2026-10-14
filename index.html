@@ -1,0 +1,23 @@
+<!doctype html><html lang=zh-Hant><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><title>我的金融證照題庫</title><style>body{font-family:system-ui,'Microsoft JhengHei',sans-serif;background:#111827;color:#e5e7eb;margin:0;padding:20px;line-height:1.7}.w{max-width:640px;margin:auto}.card{background:#1f2937;border:1px solid #374151;border-radius:14px;padding:16px;margin:12px 0}.card h3{margin:0 0 4px}a.b{display:block;text-align:center;background:#3b82f6;color:#fff;text-decoration:none;border-radius:12px;padding:14px;margin:10px 0 8px;font-weight:bold}.sub{display:flex;gap:6px;flex-wrap:wrap}.sub a{flex:1;min-width:70px;text-align:center;background:#111827;border:1px solid #374151;color:#e5e7eb;text-decoration:none;border-radius:10px;padding:8px 4px;font-size:14px}.mut{color:#9ca3af;font-size:14px}</style><body><div class=w>
+<h2>我的金融證照題庫</h2>
+<div id=list></div>
+<div class=mut>作答紀錄存在這台裝置的瀏覽器；有開同步的科目會跟雲端同步。</div></div>
+<script>
+const SITES = [
+  {name: '理財規劃人員', path: 'fp-quiz', key: 'fpquiz_v1'},
+  {name: '銀行內控（一般）', path: 'bank-ic-quiz', key: 'bankic_v1'},
+];
+const SUB = [['note.html', '📖 筆記'], ['answers.html', '✅ 解析'], ['numbers.html', '🔢 數字'], ['predict.html', '🎯 預測']];
+function prog(key) {
+  try {
+    const s = JSON.parse(localStorage.getItem(key) || 'null');
+    const r = Object.values((s && s.rec) || {});
+    if (!r.length) return '還沒開始練';
+    const t = Math.max(...r.map(x => x.t || 0));
+    return `已練 ${r.length} 題` + (t ? `｜上次 ${new Date(t).toLocaleDateString('zh-TW')}` : '');
+  } catch (e) { return ''; }
+}
+document.getElementById('list').innerHTML = SITES.map(x => `<div class=card><h3>${x.name}</h3><div class=mut>${prog(x.key)}</div>
+  <a class=b href="/${x.path}/">📝 題庫練習／模擬考</a>
+  <div class=sub>${SUB.map(([f, n]) => `<a href="/${x.path}/${f}">${n}</a>`).join('')}</div></div>`).join('');
+</script>
